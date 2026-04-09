@@ -15,7 +15,8 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Base(DeclarativeBase):
-    pass
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__}>"
 
 
 class Release(Base):
@@ -35,6 +36,9 @@ class Release(Base):
     event_count: Mapped[Optional[int]] = mapped_column(BigInteger)
     release_tag: Mapped[Optional[str]]
 
+    def __repr__(self) -> str:
+        return f"<Release(id={self.id!r}, record_id={self.record_id!r})>"
+
 
 class Collection(Base):
     """Child collection under a release (collision or simulated MC)."""
@@ -51,6 +55,9 @@ class Collection(Base):
     file_count: Mapped[Optional[int]]
     event_count: Mapped[Optional[int]] = mapped_column(BigInteger)
     release_id: Mapped[Optional[int]] = mapped_column(ForeignKey("release.id"))
+
+    def __repr__(self) -> str:
+        return f"<Collection(id={self.id!r}, record_id={self.record_id!r})>"
 
 
 class Dataset(Base):
@@ -69,6 +76,9 @@ class Dataset(Base):
     k_factor: Mapped[Optional[float]]
     collection_id: Mapped[Optional[int]] = mapped_column(ForeignKey("collection.id"))
 
+    def __repr__(self) -> str:
+        return f"<Dataset(id={self.id!r}, dsid={self.dsid!r})>"
+
 
 class ManifestSummary(Base):
     """Immutable summary artifact per manifest build run."""
@@ -83,6 +93,9 @@ class ManifestSummary(Base):
     protocol: Mapped[str] = mapped_column(nullable=False)
     # stable_hash: sha256 over ordered file list — used for deterministic subset selection
     stable_hash: Mapped[str] = mapped_column(nullable=False)
+
+    def __repr__(self) -> str:
+        return f"<ManifestSummary(id={self.id!r}, dataset_ref={self.dataset_ref!r})>"
 
 
 class FileManifest(Base):
@@ -100,9 +113,10 @@ class FileManifest(Base):
     size_bytes: Mapped[Optional[int]] = mapped_column(BigInteger)
     source_tool: Mapped[str] = mapped_column(nullable=False)
     discovered_at: Mapped[Optional[datetime]]
-    manifest_summary_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("manifest_summary.id")
-    )
+    manifest_summary_id: Mapped[Optional[int]] = mapped_column(ForeignKey("manifest_summary.id"))
+
+    def __repr__(self) -> str:
+        return f"<FileManifest(id={self.id!r}, dataset_ref={self.dataset_ref!r})>"
 
 
 class SubsetPlan(Base):
@@ -118,9 +132,10 @@ class SubsetPlan(Base):
     # selected_files: JSON array stored as Text — callers do json.dumps/loads
     selected_files: Mapped[str] = mapped_column(Text, nullable=False)
     plan_hash: Mapped[str] = mapped_column(nullable=False)
-    manifest_summary_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("manifest_summary.id")
-    )
+    manifest_summary_id: Mapped[Optional[int]] = mapped_column(ForeignKey("manifest_summary.id"))
+
+    def __repr__(self) -> str:
+        return f"<SubsetPlan(id={self.id!r}, algorithm_version={self.algorithm_version!r})>"
 
 
 class ExecutionPlan(Base):
@@ -140,6 +155,9 @@ class ExecutionPlan(Base):
     expected_outputs: Mapped[Optional[str]] = mapped_column(Text)
     subset_plan_id: Mapped[Optional[int]] = mapped_column(ForeignKey("subset_plan.id"))
 
+    def __repr__(self) -> str:
+        return f"<ExecutionPlan(id={self.id!r}, container_image_tag={self.container_image_tag!r})>"
+
 
 class ProvenanceRecord(Base):
     """Citation and license provenance for datasets used in a run."""
@@ -155,6 +173,9 @@ class ProvenanceRecord(Base):
     license: Mapped[str] = mapped_column(nullable=False)
     run_id: Mapped[Optional[str]]
 
+    def __repr__(self) -> str:
+        return f"<ProvenanceRecord(id={self.id!r}, run_id={self.run_id!r})>"
+
 
 class ValidationReport(Base):
     """Outcome of a validation run against live ATLAS open data."""
@@ -169,9 +190,10 @@ class ValidationReport(Base):
     bytes_read: Mapped[Optional[int]] = mapped_column(BigInteger)
     wall_time: Mapped[Optional[float]]
     summary_metrics: Mapped[Optional[str]] = mapped_column(Text)
-    execution_plan_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("execution_plan.id")
-    )
+    execution_plan_id: Mapped[Optional[int]] = mapped_column(ForeignKey("execution_plan.id"))
+
+    def __repr__(self) -> str:
+        return f"<ValidationReport(id={self.id!r}, success={self.success!r})>"
 
 
 class EvalRun(Base):
@@ -186,3 +208,22 @@ class EvalRun(Base):
     correct_count: Mapped[int] = mapped_column(nullable=False)
     # JSON array of per-question result objects stored as Text
     results: Mapped[str] = mapped_column(Text, nullable=False)
+
+    def __repr__(self) -> str:
+        return f"<EvalRun(id={self.id!r}, run_id={self.run_id!r})>"
+
+
+class DocPage(Base):
+    """Fetched documentation page from the ATLAS / CERN corpus."""
+
+    __tablename__ = "doc_page"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    url: Mapped[str] = mapped_column(nullable=False, unique=True)
+    title: Mapped[Optional[str]]
+    content_text: Mapped[Optional[str]] = mapped_column(Text)
+    fetched_at: Mapped[Optional[datetime]]
+
+    def __repr__(self) -> str:
+        return f"<DocPage(id={self.id!r}, url={self.url!r})>"

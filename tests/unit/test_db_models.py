@@ -9,12 +9,10 @@ constraints (the risky control-plane invariants), 3 cover basic field
 presence. This mirrors where the failure cost is highest.
 """
 
-import pytest
-from sqlalchemy import BigInteger, Boolean, inspect as sa_inspect
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import Boolean
+from sqlalchemy import inspect as sa_inspect
 
 from atlas_workbench.db.models import (
-    Base,
     Collection,
     Dataset,
     EvalRun,
@@ -88,6 +86,18 @@ def test_file_manifest_requires_file_url_root():
     assert not col.nullable, "FileManifest.file_url_root must be NOT NULL"
 
 
+def test_subset_plan_stores_algorithm_version():
+    """algorithm_version column exists and is NOT NULL — required by acceptance criteria."""
+    col = _col(SubsetPlan, "algorithm_version")
+    assert not col.nullable, "SubsetPlan.algorithm_version must be NOT NULL"
+
+
+def test_execution_plan_stores_container_image_tag():
+    """container_image_tag column exists and is NOT NULL — required by acceptance criteria."""
+    col = _col(ExecutionPlan, "container_image_tag")
+    assert not col.nullable, "ExecutionPlan.container_image_tag must be NOT NULL"
+
+
 def test_subset_plan_reproducibility_fields_not_null():
     """algorithm_version pins reproducibility; a NULL breaks the audit trail."""
     col = _col(SubsetPlan, "algorithm_version")
@@ -143,4 +153,7 @@ def test_all_models_have_created_at():
         col = _col(model, "created_at")
         assert col.server_default is not None, (
             f"{model.__name__}.created_at must have server_default=func.now()"
+        )
+        assert str(col.server_default.arg) != "", (
+            f"{model.__name__}.created_at server_default must be a non-empty SQL expression"
         )

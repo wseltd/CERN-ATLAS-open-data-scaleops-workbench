@@ -25,6 +25,10 @@ dependencies = [
     "fsspec-xrootd>=0.3.2",
 ]
 
+[project.scripts]
+atlas-seed = "scripts.seed_runner:main"
+atlas-validate = "scripts.validate_runner:main"
+
 [project.optional-dependencies]
 test = [
     "pytest>=8.2.0",

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "question": "What is the top-level collection record ID and DOI for the ATLAS 2015\u20132016 Open Data for Research DAOD_PHYSLITE release?"
+  },
+  {
+    "id": 2,
+    "question": "What are the official total size, file count, and event count for the release, and what units are used?"
+  },
+  {
+    "id": 3,
+    "question": "List all child collections under the release record and classify them as collision or simulated."
+  },
+  {
+    "id": 4,
+    "question": "For record 80001, how many files are expected and what is its total size?"
+  },
+  {
+    "id": 5,
+    "question": "For record 80017, how many files are expected and what is its total size?"
+  },
+  {
+    "id": 6,
+    "question": "What is the recommended release tag name in atlasopenmagic for the 2024 research proton-proton dataset?"
+  },
+  {
+    "id": 7,
+    "question": "How do I retrieve streamable ROOT protocol file URLs for DSID 410470 using atlasopenmagic?"
+  },
+  {
+    "id": 8,
+    "question": "How do I retrieve file URLs by DOI using cernopendata-client with the xrootd protocol?"
+  },
+  {
+    "id": 9,
+    "question": "What is the deterministic subset selection algorithm in this system, and what is the selected file list hash?"
+  },
+  {
+    "id": 10,
+    "question": "For the chosen collision subset, are we streaming or caching, and what decision rule triggered that choice?"
+  },
+  {
+    "id": 11,
+    "question": "What is the maximum cache size in the current execution plan, and where is the cache stored?"
+  },
+  {
+    "id": 12,
+    "question": "Which container image tag is used for the execution plan, and how is it version pinned?"
+  },
+  {
+    "id": 13,
+    "question": "Which Python package versions are pinned for uproot, awkward, and vector in the validation plan?"
+  },
+  {
+    "id": 14,
+    "question": "Does the chosen file contain CollectionTree, and what is the number of entries read?"
+  },
+  {
+    "id": 15,
+    "question": "What branches were read during validation, and how many bytes were read from remote storage?"
+  },
+  {
+    "id": 16,
+    "question": "What is the expected citation text and DOI for the datasets used in the last run?"
+  },
+  {
+    "id": 17,
+    "question": "Under what license are the data released, and what does ATLAS request regarding citation?"
+  },
+  {
+    "id": 18,
+    "question": "What MC metadata fields are required to compute a correct event weight, and what extra factors must be applied beyond the raw cross section?"
+  },
+  {
+    "id": 19,
+    "question": "If xrootd streaming is slow or fails, what fallback protocol is configured, and what URL rewrite rule is used?"
+  },
+  {
+    "id": 20,
+    "question": "What are the top three reasons the last validation run could not be reproduced, if any, based on recorded control-plane outputs?"
+  }
+]

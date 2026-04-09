@@ -1,0 +1,23 @@
+services:
+  atlas-workbench:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - atlas_db_data:/app/data
+      - ../fixtures:/app/fixtures:ro
+    environment:
+      DATABASE_URL: "sqlite:////app/data/workbench.db"
+      ATLAS_RELEASE_TAG: "2024r-pp"
+      ATLAS_PROTOCOL: "root"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  atlas_db_data:

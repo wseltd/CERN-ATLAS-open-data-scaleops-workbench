@@ -1,0 +1,73 @@
+{
+  "release": {
+    "record_id": "80020",
+    "doi": "10.7483/OPENDATA.ATLAS.9HK7.P5SI",
+    "title": "ATLAS Open Data for Research 2024 (DAOD_PHYSLITE, Run 2, 13 TeV)",
+    "total_size_tib": 65.3,
+    "file_count": 70611,
+    "event_count": 9058437931,
+    "release_tag": "2024r-pp",
+    "collection_type": "release",
+    "description": "Full Run 2 ATLAS Open Data release for research, produced with Athena Release 22 and MC campaign MC20a. Delivered in DAOD_PHYSLITE format — suitable for direct columnar analysis (uproot) and AnalysisBase workflows.",
+    "record_url": "https://opendata.cern.ch/record/80020"
+  },
+  "collections": [
+    {
+      "record_id": "80001",
+      "doi": "10.7483/OPENDATA.ATLAS.4ZES.DJHA",
+      "title": "ATLAS 2016 proton-proton collision data (DAOD_PHYSLITE, 13 TeV)",
+      "collection_type": "collision",
+      "size_tib": 35.4,
+      "file_count": 45571,
+      "event_count": 5383448881,
+      "parent_record_id": "80020",
+      "record_url": "https://opendata.cern.ch/record/80001",
+      "description": "2016 proton-proton collision data at 13 TeV, 45,571 files, 35.4 TiB. Primary large-scale collision collection for manifest and subset planning.",
+      "run_period": "2016",
+      "energy_tev": 13.0
+    },
+    {
+      "record_id": "80000",
+      "doi": "10.7483/OPENDATA.ATLAS.AOQL.8TT3",
+      "title": "ATLAS 2015 proton-proton collision data (DAOD_PHYSLITE, 13 TeV)",
+      "collection_type": "collision",
+      "size_tib": 9.3,
+      "file_count": 10049,
+      "event_count": 1694555330,
+      "parent_record_id": "80020",
+      "record_url": "https://opendata.cern.ch/record/80000",
+      "description": "2015 proton-proton collision data at 13 TeV, 10,049 files, 9.3 TiB.",
+      "run_period": "2015",
+      "energy_tev": 13.0
+    },
+    {
+      "record_id": "80017",
+      "doi": "10.7483/OPENDATA.ATLAS.MM1Y.O0PH",
+      "title": "ATLAS MC top nominal samples (DAOD_PHYSLITE, MC20a, 13 TeV)",
+      "collection_type": "simulated",
+      "size_tib": 0.835,
+      "file_count": 437,
+      "event_count": 63507400,
+      "parent_record_id": "80020",
+      "record_url": "https://opendata.cern.ch/record/80017",
+      "description": "Top nominal MC samples, 437 files, 855.3 GiB. Includes DSID 410470 (tt-bar, PhPy8EG A14) used in the official PHYSLITE tutorial notebook.",
+      "mc_campaign": "MC20a",
+      "energy_tev": 13.0,
+      "validation_dsid": 410470,
+      "validation_dsid_description": "mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYSLITE"
+    }
+  ],
+  "datasets": [
+    {
+      "dsid": 410470,
+      "name": "PhPy8EG_A14_ttbar_hdamp258p75_nonallhad",
+      "process_type": "ttbar",
+      "cross_section": 831.76,
+      "filter_efficiency": 0.5433,
+      "k_factor": 1.0,
+      "collection_record_id": "80017",
+      "physics_short": "mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.deriv.DAOD_PHYSLITE",
+      "note": "Event weight = cross_section * filter_efficiency * k_factor. Never use raw cross_section alone."
+    }
+  ]
+}
