@@ -23,8 +23,8 @@ def test_container_image_tag_is_exact():
 def test_pinned_packages_contains_uproot_awkward_vector():
     sd = decide_stream_vs_cache(1024)
     plan = build_execution_plan(selected_files=_SMALL_FILES, stream_decision=sd)
-    assert plan.pinned_packages["uproot"] == "5.1.2"
-    assert plan.pinned_packages["awkward"] == "2.5.0"
+    assert plan.pinned_packages["uproot"] == "5.3.0"
+    assert plan.pinned_packages["awkward"] == "2.6.0"
     assert plan.pinned_packages["vector"] == "1.1.1"
 
 

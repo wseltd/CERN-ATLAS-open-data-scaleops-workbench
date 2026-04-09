@@ -106,4 +106,4 @@ def test_plans_execution_returns_pinned_container_image(client):
     body = resp.json()
     assert "25.2.2" in body["container_image_tag"]
     assert "latest" not in body["container_image_tag"].lower()
-    assert body["pinned_packages"]["uproot"] == "5.1.2"
+    assert body["pinned_packages"]["uproot"] == "5.3.0"

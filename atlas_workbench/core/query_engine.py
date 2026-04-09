@@ -145,7 +145,7 @@ _STATIC_ANSWERS: dict[str, str] = {
     ),
     "execution_plan": (
         "Container: gitlab-registry.cern.ch/atlas/athena/analysisbase:25.2.2. "
-        "Pinned packages: uproot==5.1.2, awkward==2.5.0, vector==1.1.1, "
+        "Pinned packages: uproot>=5.3.0, awkward>=2.6.0, vector>=1.1.1, "
         "atlasopenmagic==1.9.0, cernopendata-client==1.0.2."
     ),
     "provenance_citation": (
@@ -218,9 +218,9 @@ def answer(question: str, session: Session) -> QueryResponse:
         execution_plan={
             "container_image_tag": "gitlab-registry.cern.ch/atlas/athena/analysisbase:25.2.2",
             "pinned_packages": {
-                "uproot": "5.1.2",
-                "awkward": "2.5.0",
-                "vector": "1.1.1",
+                "uproot": ">=5.3.0",
+                "awkward": ">=2.6.0",
+                "vector": ">=1.1.1",
             },
         },
         provenance_and_citation={

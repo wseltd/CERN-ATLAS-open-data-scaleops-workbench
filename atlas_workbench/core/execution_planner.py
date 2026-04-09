@@ -15,8 +15,8 @@ from atlas_workbench.core.stream_decision import StreamCacheDecision
 CONTAINER_IMAGE_TAG: str = "gitlab-registry.cern.ch/atlas/athena/analysisbase:25.2.2"
 
 PINNED_PACKAGES: dict[str, str] = {
-    "uproot": "5.1.2",
-    "awkward": "2.5.0",
+    "uproot": "5.3.0",
+    "awkward": "2.6.0",
     "vector": "1.1.1",
     "atlasopenmagic": "1.9.0",
     "cernopendata-client": "1.0.2",
