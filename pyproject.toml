@@ -14,13 +14,18 @@ dependencies = [
     "sqlalchemy>=2.0.30",
     "uvicorn>=0.30.1",
     "httpx>=0.27.0",
-    # Scientific/domain packages — == pins because validation task depends on exact API surface
+    # Scientific/domain packages
     "atlasopenmagic==1.9.0",
     "cernopendata-client==1.0.2",
-    "uproot==5.1.2",
-    "awkward==2.5.0",
-    "vector==1.1.1",
-    # Remote streaming — >= allows compatible updates
+    # uproot>=5.3.0: 5.1.2 broken on numpy 2.x (uint8 OverflowError)
+    # awkward>=2.6.0: 2.5.0 broken on numpy 2.x (missing numpy.AxisError)
+    "uproot>=5.3.0",
+    "awkward>=2.6.0",
+    "vector>=1.1.1",
+    # HTTP transport for uproot over opendata.cern.ch (fallback when xrootd port 1094 blocked)
+    "aiohttp>=3.9.0",
+    "requests>=2.31.0",
+    # Remote streaming via xrootd — >= allows compatible updates
     "xrootd>=5.6.9",
     "fsspec-xrootd>=0.3.2",
 ]

@@ -52,11 +52,18 @@ def _open_and_read(url: str, protocol_fallback: bool = True) -> tuple[int, int, 
 
     Returns (numentries, bytes_read, branches_read).
     Raises RuntimeError on failure.
+
+    When xrootd (port 1094) is unreachable, skips directly to the http://
+    fallback URL rather than waiting for a 60-second connection timeout.
     """
     import uproot  # type: ignore[import]
 
+    _xrootd_up = xrootd_reachable()
     errors = []
     for attempt_url in _url_variants(url):
+        if attempt_url.startswith("root://") and not _xrootd_up:
+            errors.append(f"{attempt_url}: skipped (xrootd port 1094 unreachable)")
+            continue
         try:
             with uproot.open(attempt_url) as f:
                 tree = f[COLLECTION_TREE]
@@ -76,11 +83,19 @@ def _open_and_read(url: str, protocol_fallback: bool = True) -> tuple[int, int, 
 
 
 def _url_variants(url: str) -> list[str]:
-    """Return [root_url, https_fallback] for a given URL."""
+    """Return [root_url, https_fallback] for a given URL.
+
+    Handles both root://eospublic.cern.ch:1094//... (atlasopenmagic form)
+    and root://eospublic.cern.ch//... (port-free form).
+    """
     variants = [url]
-    if url.startswith("root://eospublic.cern.ch//"):
-        path = url[len("root://eospublic.cern.ch/") :]
-        variants.append(f"http://opendata.cern.ch{path}")
+    for prefix in ("root://eospublic.cern.ch:1094/", "root://eospublic.cern.ch/"):
+        if url.startswith(prefix):
+            path = url[len(prefix) :]
+            if not path.startswith("/"):
+                path = "/" + path
+            variants.append(f"http://opendata.cern.ch{path}")
+            break
     return variants
 
 
