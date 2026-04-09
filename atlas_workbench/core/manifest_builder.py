@@ -70,15 +70,26 @@ def normalize_url(url: str) -> str:
 def _root_to_https(root_url: str) -> str | None:
     """Derive an https URL from a root:// URL.
 
-    root://eospublic.cern.ch//eos/opendata/...
-    → http://opendata.cern.ch/eos/opendata/...
+    Handles both port-bearing and port-free forms:
+      root://eospublic.cern.ch:1094//eos/opendata/...
+      root://eospublic.cern.ch//eos/opendata/...
+    Both map to:
+      http://opendata.cern.ch/eos/opendata/...
 
     Returns None if the URL is not a recognised root:// form.
     """
-    if not root_url.startswith("root://eospublic.cern.ch//"):
-        return None
-    path = root_url[len("root://eospublic.cern.ch/") :]
-    return f"http://opendata.cern.ch{path}"
+    for prefix in (
+        "root://eospublic.cern.ch:1094/",
+        "root://eospublic.cern.ch/",
+    ):
+        if root_url.startswith(prefix):
+            # Strip prefix; the remaining path starts with one or two slashes.
+            # Normalise to a single leading slash for the https URL.
+            path = root_url[len(prefix) :]
+            if not path.startswith("/"):
+                path = "/" + path
+            return f"http://opendata.cern.ch{path}"
+    return None
 
 
 def compute_manifest_hash(urls: list[str]) -> str:
