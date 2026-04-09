@@ -51,11 +51,12 @@ def get_urls(
         ) from exc
 
     try:
-        urls: list[str] = atom.get_urls(dsid, release_tag, protocol=protocol)
+        atom.set_release(release_tag)
+        urls: list[str] = atom.get_urls(dsid, protocol=protocol)
     except Exception as exc:
         raise AtlasClientError(
-            f"atlasopenmagic.get_urls({dsid!r}, {release_tag!r}, protocol={protocol!r}) "
-            f"failed: {exc}"
+            f"atlasopenmagic.get_urls({dsid!r}, protocol={protocol!r}) "
+            f"[release={release_tag!r}] failed: {exc}"
         ) from exc
 
     urls = [_strip_simplecache(u) for u in urls if u]
@@ -63,7 +64,7 @@ def get_urls(
     if not urls and protocol == "root":
         # Transparent fallback: retry with https
         try:
-            urls = atom.get_urls(dsid, release_tag, protocol="https")
+            urls = atom.get_urls(dsid, protocol="https")
         except Exception as exc:
             raise AtlasClientError(
                 f"atlasopenmagic https fallback also failed for DSID {dsid}: {exc}"
