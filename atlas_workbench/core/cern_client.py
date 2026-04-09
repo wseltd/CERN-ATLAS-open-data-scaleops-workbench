@@ -13,6 +13,9 @@ import json
 class CernClientError(RuntimeError):
     """Raised when cernopendata-client fails or returns unusable results."""
 
+    def __repr__(self) -> str:
+        return f"CernClientError({self.args[0]!r})" if self.args else "CernClientError()"
+
 
 def _expand_file_index(raw_locations: list[str]) -> list[str]:
     """Expand file-index JSON entries into individual data file URLs.

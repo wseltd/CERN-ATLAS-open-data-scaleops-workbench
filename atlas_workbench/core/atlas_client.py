@@ -10,6 +10,9 @@ from __future__ import annotations
 class AtlasClientError(RuntimeError):
     """Raised when atlasopenmagic fails or returns unusable results."""
 
+    def __repr__(self) -> str:
+        return f"AtlasClientError({self.args[0]!r})" if self.args else "AtlasClientError()"
+
 
 def _strip_simplecache(url: str) -> str:
     """Remove fsspec simplecache:: prefix if present.

@@ -25,6 +25,9 @@ class ReasonCode(str, Enum):
     BELOW_MIN_CACHE_THRESHOLD = "BELOW_MIN_CACHE_THRESHOLD"
     CACHE_ENABLED = "CACHE_ENABLED"
 
+    def __repr__(self) -> str:
+        return f"ReasonCode.{self.name}"
+
 
 @dataclass
 class StreamCacheDecision:
