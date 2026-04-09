@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atlas-open-data-scaleops-workbench"
+version = "0.1.0"
+description = "Control-plane-first data engineering system for the ATLAS 2024 research open-data release (DAOD_PHYSLITE)"
+requires-python = ">=3.11"
+dependencies = [
+    # Infrastructure — >= allows patch-level updates within semver bounds
+    "fastapi>=0.111.0",
+    "pydantic>=2.7.0",
+    "sqlalchemy>=2.0.30",
+    "uvicorn>=0.30.1",
+    "httpx>=0.27.0",
+    # Scientific/domain packages — == pins because validation task depends on exact API surface
+    "atlasopenmagic==1.9.0",
+    "cernopendata-client==1.0.2",
+    "uproot==5.1.2",
+    "awkward==2.5.0",
+    "vector==1.1.1",
+    # Remote streaming — >= allows compatible updates
+    "xrootd>=5.6.9",
+    "fsspec-xrootd>=0.3.2",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.2.0",
+    "ruff>=0.4.4",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["atlas_workbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
